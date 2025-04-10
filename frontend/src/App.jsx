@@ -1,62 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import logo from './assets/logos/logo.png'; // Importa tu logo
-import userIcon from './assets/logos/user icon.svg'; // Ícono de usuario
-import notesIcon from './assets/logos/list icon.svg'; // Ícono de notas
-import searchIcon from './assets/logos/search.png'; // Ícono de búsqueda
-import banner from './assets/home/banner-img.png'; // Banner
-import brilla from './assets/home/brilla.png'; // Banner
-import brilla2 from './assets/home/brilla2.png'; // Banner
-import cerveza1 from './assets/home/cerveza bahia.png'; // Banner
-import cerveza2 from './assets/home/cerveza2.png'; // Banner
-import cerveza3 from './assets/home/cerveza3.png'; // Banner
-import chocolatina from './assets/home/chocolatina.png'; // Banner
-import lomo from './assets/carnes/lomocerdo.png'; // Banner
-import d1logo from './assets/logos/d1logo.png'; // Banner
-import aralogo from './assets/logos/aralogo.png'; // Banner
-import exitologo from './assets/logos/exitologo.png'; // Banner
+import logo from './assets/logos/logo.png';
+import userIcon from './assets/logos/user icon.svg';
+import notesIcon from './assets/logos/list icon.svg';
+import searchIcon from './assets/logos/search.png';
+import banner from './assets/home/banner-img.png';
+import brilla from './assets/home/brilla.png';
+import brilla2 from './assets/home/brilla2.png';
+import cerveza1 from './assets/home/cerveza bahia.png';
+import cerveza2 from './assets/home/cerveza2.png';
+import cerveza3 from './assets/home/cerveza3.png';
+import chocolatina from './assets/home/chocolatina.png';
+import lomo from './assets/carnes/lomocerdo.png';
+import d1logo from './assets/logos/d1logo.png';
+import aralogo from './assets/logos/aralogo.png';
+import exitologo from './assets/logos/exitologo.png';
 import { useNavigate } from 'react-router-dom';
 
 function App() {
-
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  // Estado para controlar la visibilidad del sidebar de categorías
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const products = [
-    {id: 1, image: brilla, name: 'Detergente Brilla'},
-    {id: 2, image: cerveza1, name: 'Cerveza Bahia'},
-    {id: 3, image: cerveza2, name: 'Cerveza Club Colombia'},
-    {id: 4, image: cerveza3, name: 'Cerveza Poker'},
-    {id: 5, image: chocolatina, name: 'Chocolatina Jumbo'},
-    {id: 6, image: lomo, name: 'Lomo de cerdo'},
-    {id: 7, image: brilla2, name: 'Detergente Brilla'},
-    {id: 8, image: cerveza3, name: 'Cerveza SI'},
+    { id: 1, image: brilla, name: 'Detergente Brilla' },
+    { id: 2, image: cerveza1, name: 'Cerveza Bahia' },
+    { id: 3, image: cerveza2, name: 'Cerveza Club Colombia' },
+    { id: 4, image: cerveza3, name: 'Cerveza Poker' },
+    { id: 5, image: chocolatina, name: 'Chocolatina Jumbo' },
+    { id: 6, image: lomo, name: 'Lomo de cerdo' },
+    { id: 7, image: brilla2, name: 'Detergente Brilla' },
+    { id: 8, image: cerveza3, name: 'Cerveza SI' },
   ];
 
-  //Truco del almendurco para efecto infinito en el carrusel
+  // Truco para efecto infinito en el carrusel
   const duplicateProducts = [...products, ...products, ...products];
 
-
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? duplicateProducts.length - 1 : prevIndex - 1);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? duplicateProducts.length - 1 : prevIndex - 1
+    );
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === duplicateProducts.length - 1 ? 0 : prevIndex + 1);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === duplicateProducts.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   useEffect(() => {
-    // Si llegamos al final derecho (duplicado)
     if (currentIndex >= products.length * 2) {
       setTimeout(() => {
-        setCurrentIndex(products.length); // Reinicia al inicio "real" (no al 0 absoluto)
+        setCurrentIndex(products.length);
       }, 0);
-    }
-    // Si llegamos al inicio izquierdo (antes del 0)
-    else if (currentIndex <= 0) {
+    } else if (currentIndex <= 0) {
       setTimeout(() => {
-        setCurrentIndex(products.length); // Reinicia al final "real"
+        setCurrentIndex(products.length);
       }, 0);
     }
   }, [currentIndex, products.length]);
@@ -64,30 +63,47 @@ function App() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    // Redirige al login (puedes usar react-router-dom más adelante)
     navigate('/login');
   };
 
   const handleNotesClick = () => {
-    // Despliega notas (por ahora vacío)
     alert('Desplegando notas...');
   };
+
+  // Abre o cierra el sidebar (al hacer click en el menú hamburguesa)
   const handleCategoriasClick = () => {
-    // Redirige a la página de categorías
-    navigate('/categorias');
-  }
+    setSidebarOpen((prev) => !prev);
+  };
+
+  // Función para redireccionar y cerrar el sidebar cuando se selecciona una categoría
+  const handleCategorySelect = (path) => {
+    navigate(path);
+    setSidebarOpen(false);
+  };
+
+  // Nueva función para redireccionar directamente a la página de categorías
+  const handleStartBuying = () => {
+    navigate('/categorias'); // Ajusta la ruta según corresponda
+  };
 
   return (
     <>
+      {/* Barra de navegación */}
       <div className="navbar">
-        {/* Logo a la izquierda */}
-        <div className="logo">
-          <img src={logo} alt="Logo" />
+        <div className="navbar-left">
+          {/* Botón menú hamburguesa */}
+          <button className="menu-button" onClick={handleCategoriasClick}>
+            <span className="hamburger-icon"></span>
+          </button>
+          {/* Logo a la derecha del botón */}
+          <div className="logo">
+            <img src={logo} alt="Logo" />
+          </div>
         </div>
 
-        {/* Barra de búsqueda en el centro */}
+        {/* Barra de búsqueda */}
         <div className="search-bar">
-          <input type="text" placeholder="¿Que producto estas buscando?" />
+          <input type="text" placeholder="¿Qué producto estás buscando?" />
           <button className="search-button">
             <img src={searchIcon} alt="Buscar" />
           </button>
@@ -104,96 +120,140 @@ function App() {
         </div>
       </div>
 
-      {/* Contenido principal*/}
+      {/* Sidebar de Categorías */}
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <button className="close-sidebar" onClick={handleCategoriasClick}>
+          &times;
+        </button>
+        <h3>Categorías</h3>
+        <ul>
+          <li onClick={() => handleCategorySelect('/frutasVerduras')}>Verduras</li>
+          <li onClick={() => handleCategorySelect('/carnes')}>Carnes</li>
+          <li onClick={() => handleCategorySelect('/aseo')}>Aseo</li>
+          <li onClick={() => handleCategorySelect('/alcohol')}>Alcohol</li>
+        </ul>
+      </div>
+
+      {/* Contenido principal */}
       <div className="main-content">
         {/* Banner */}
         <div className="banner">
           <div className="banner-text">
             <h1>Compara, ahorra y elige: ¡Todo en un solo lugar!</h1>
-            <p>Encuentra las mejores ofertas en aseo, alimentos y tecnologia, siempre al mejor precio!</p>
-          <button onClick={handleCategoriasClick} className="banner-button">¡Empezar a comparar!</button>
-          
+            <p>
+              Encuentra las mejores ofertas en aseo, alimentos y tecnología, siempre al
+              mejor precio!
+            </p>
+            <button onClick={handleStartBuying} className="banner-button">
+              ¡Empezar a comprar!
+            </button>
           </div>
-        <div className="banner-img">
-          <img src={banner} alt="Banner" /> 
+          <div className="banner-img">
+            <img src={banner} alt="Banner" />
           </div>
-      </div>
+        </div>
 
         {/* Productos */}
-        <div className= 'productos-buscados'>
+        <div className="productos-buscados">
           <h2>¡Productos más buscados!</h2>
-          <div className='carrusel'>
-            <button className='prev' onClick={handlePrev}>
+          <div className="carrusel">
+            <button className="prev" onClick={handlePrev}>
               &#10094;
             </button>
-            <div className='carrusel-img'>
-              {duplicateProducts.slice(currentIndex, currentIndex + 3).map((product, index) => (
-                <div key={`${product.id}-${index}`} className= 'carrusel-item'>
-                  <img src={product.image} alt={product.name} />
-                  <p>{product.name}</p>
+            <div className="carrusel-img">
+              {duplicateProducts
+                .slice(currentIndex, currentIndex + 3)
+                .map((product, index) => (
+                  <div key={`${product.id}-${index}`} className="carrusel-item">
+                    <img src={product.image} alt={product.name} />
+                    <p>{product.name}</p>
+                  </div>
+                ))}
             </div>
-              ))}
-            </div>
-            <button className='next' onClick={handleNext}>
+            <button className="next" onClick={handleNext}>
               &#10095;
             </button>
           </div>
         </div>
+
         {/* Supermercados */}
-        <div className = 'supermercados-comparados'>
+        <div className="supermercados-comparados">
           <h2>Supermercados comparados</h2>
-          <div className = 'linea-decorativa'></div>
-          <div className = 'supermercados-lista'>
-            <div className = 'supermercado'>
+          <div className="linea-decorativa"></div>
+          <div className="supermercados-lista">
+            <div className="supermercado">
               <img src={d1logo} alt="D1" />
               <p>D1</p>
             </div>
-            <div className = 'supermercado'>
+            <div className="supermercado">
               <img src={aralogo} alt="ARA" />
               <p>ARA</p>
-          </div>
             </div>
-          <div className = 'supermercado'>
-            <img src={exitologo} alt="exito" />
-            <p>Exito</p>
+            <div className="supermercado">
+              <img src={exitologo} alt="Éxito" />
+              <p>Éxito</p>
+            </div>
           </div>
         </div>
+
         {/* Footer */}
-        <div className='footer'>
-          <div className='footer-logo'>
+        <div className="footer">
+          <div className="footer-logo">
             <img src={logo} alt="Logo" />
             <p>Pricen</p>
           </div>
-          <div className='footer-links'>
-            <div className='footer-column'>
+          <div className="footer-links">
+            <div className="footer-column">
               <h3>About Us</h3>
               <ul>
-                <li><a href= "/about">¿Quienes somos?</a></li>
-                <li><a href= "/mission">Acerca de</a></li>
-                <li><a href= "/team">Nuestro equipo</a></li>
-                <li><a href= "/contact">Contactanos</a></li>
+                <li>
+                  <a href="/about">¿Quiénes somos?</a>
+                </li>
+                <li>
+                  <a href="/mission">Acerca de</a>
+                </li>
+                <li>
+                  <a href="/team">Nuestro equipo</a>
+                </li>
+                <li>
+                  <a href="/contact">Contáctanos</a>
+                </li>
               </ul>
             </div>
-            <div className='footer-column'>
+            <div className="footer-column">
               <h3>Services</h3>
               <ul>
-                <li><a href= "/services">¿Qué hacemos?</a></li>
-                <li><a href= "/products">Productos</a></li>
-                <li><a href= "/offers">Ofertas</a></li>
-                <li><a href= "/brands">Marcas</a></li>
+                <li>
+                  <a href="/services">¿Qué hacemos?</a>
+                </li>
+                <li>
+                  <a href="/products">Productos</a>
+                </li>
+                <li>
+                  <a href="/offers">Ofertas</a>
+                </li>
+                <li>
+                  <a href="/brands">Marcas</a>
+                </li>
               </ul>
-              </div>
-            <div className='footer-column'>
+            </div>
+            <div className="footer-column">
               <h3>Servicios</h3>
               <ul>
-                <li><a href= "/privacy">Privacidad</a></li>
-                <li><a href= "/terms">Términos y condiciones</a></li>
-                <li><a href= "/cookies">Cookies</a></li>
+                <li>
+                  <a href="/privacy">Privacidad</a>
+                </li>
+                <li>
+                  <a href="/terms">Términos y condiciones</a>
+                </li>
+                <li>
+                  <a href="/cookies">Cookies</a>
+                </li>
               </ul>
-            </div>  
+            </div>
           </div>
         </div>
-    </div>
+      </div>
     </>
   );
 }

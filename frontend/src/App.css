@@ -3,7 +3,6 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
-  
 }
 
 /* Navbar */
@@ -19,6 +18,55 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
+}
+
+/* Contenedor izquierdo de la navbar */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Botón menú hamburguesa */
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ícono de hamburguesa */
+.hamburger-icon {
+  display: inline-block;
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  position: relative;
+  border-radius: 2px;
+}
+
+/* Barras superior e inferior */
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-icon::before {
+  top: -8px;
+}
+
+.hamburger-icon::after {
+  top: 8px;
 }
 
 /* Logo */
@@ -77,7 +125,7 @@ body {
 }
 
 .icon-button img {
-  height: 24px;
+  height: 35px;
 }
 
 /* Contenido principal */
@@ -86,9 +134,9 @@ body {
   padding: 20px;
 }
 
-/*(Recuadro azul) */
+/* Banner */
 .banner {
-  background-color: #0b7684; /* Color azul */
+  background-color: #0b7684;
   width: 100%;
   height: 70vh;
   padding: 10px 20px;
@@ -118,7 +166,7 @@ body {
 
 /* Botón CTA */
 .banner-button {
-  background-color: #8ccbcf; /* Color del botón */
+  background-color: #8ccbcf;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -128,11 +176,11 @@ body {
   transition: background-color 0.3s;
 }
 
-.cta-button:hover {
-  background-color: #ff4c4c; /* Color al hacer hover */
+.banner-button:hover {
+  background-color: #ff4c4c;
 }
 
-/* imagen del banner */
+/* Imagen del banner */
 .banner-img {
   max-width: 100%;
   width: auto;
@@ -147,17 +195,20 @@ body {
   border-radius: 10px;
 }
 
+/* Productos buscados */
 .productos-buscados {
   margin-top: 40px;
   padding: 20px;
   text-align: left;
 }
+
 .productos-buscados h2 {
   font-size: 2rem;
-  color:#0b7684;
+  color: #0b7684;
   margin-bottom: 20px;
 }
 
+/* Carrusel */
 .carrusel {
   display: flex;
   align-items: center;
@@ -174,12 +225,13 @@ body {
   gap: 20px;
   overflow: hidden;
   width: 100%;
-  margin: 0 auto; 
+  margin: 0 auto;
   scroll-behavior: smooth;
   justify-content: center;
   transition: transform 0.5s ease-in-out;
 }
-.carrusel-item{
+
+.carrusel-item {
   flex: 0 0 calc(25% - 20px);
   text-align: center;
   border: 3px solid #0b7684;
@@ -205,11 +257,12 @@ body {
 .carrusel-item p {
   margin-top: 10px;
   font-size: 1rem;
-  color: #333
+  color: #333;
 }
 
-/* Botones de navegación */
-.carrusel-button {
+/* Botones de navegación del carrusel */
+.prev,
+.next {
   background-color: #0b7684;
   color: white;
   border: none;
@@ -224,18 +277,21 @@ body {
   z-index: 10;
 }
 
-
-.carrusel-button:hover {
+.prev:hover,
+.next:hover {
   background-color: #095c68;
 }
-.carrusel-button.prev {
+
+.prev {
   left: 10px;
 }
-.carrusel-button.next {
+
+.next {
   right: 10px;
 }
 
-.supermercados-comparados{
+/* Supermercados comparados */
+.supermercados-comparados {
   text-align: center;
   margin: 40px auto;
   padding: 20px;
@@ -244,13 +300,12 @@ body {
 
 .supermercados-comparados h2 {
   font-size: 2rem;
-  color:#0b7684;
+  color: #0b7684;
   margin-bottom: 10px;
 }
 
-/* Linea decorativa */
-
-.linea-decorativa{
+/* Línea decorativa */
+.linea-decorativa {
   width: 100px;
   height: 3px;
   background-color: #0b7684;
@@ -258,23 +313,23 @@ body {
 }
 
 /* Lista de supermercados */
-.supermercados-lista{
+.supermercados-lista {
   display: flex;
   gap: 40px;
   justify-content: center;
   margin-top: 20px;
 }
 
-/* Cada supermercado */
-
 .supermercado {
   text-align: center;
 }
-.supermercado img{
+
+.supermercado img {
   width: 100px;
   height: auto;
   border-radius: 10px;
 }
+
 .supermercado p {
   margin-top: 10px;
   font-size: 1.2rem;
@@ -283,26 +338,25 @@ body {
 
 /* Footer */
 .footer {
-  background-color: #0b7684; /* Color de fondo */
+  background-color: #0b7684;
   color: white;
   padding-top: 40px;
   padding-right: 100px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 103.9%; /* Ocupa todo el ancho */
-  margin-left: -50px;/* Incluye el padding en el ancho */
+  width: 103.9%;
+  margin-left: -50px;
   margin-bottom: -20px;
 }
 
-/* Logo y nombre */
 .footer-logo {
   text-align: center;
-  flex: 0 0 200px; /* Ancho fijo para el logo */
+  flex: 0 0 200px;
 }
 
 .footer-logo img {
-  width: 100px; /* Ajusta el tamaño del logo */
+  width: 100px;
   height: auto;
 }
 
@@ -312,12 +366,11 @@ body {
   font-weight: bold;
 }
 
-/* Columnas de enlaces */
 .footer-links {
   display: flex;
   gap: 40px;
-  flex: 1; /* Ocupa el espacio restante */
-  justify-content: space-around; /* Distribuye el espacio entre columnas */
+  flex: 1;
+  justify-content: space-around;
 }
 
 .footer-column {
@@ -345,5 +398,63 @@ body {
 }
 
 .footer-column ul li a:hover {
-  color: #ff6b6b; /* Color al hacer hover */
+  color: #ff6b6b;
+}
+
+/* ===============================
+   Sidebar de Categorías
+   =============================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: rgba(11, 118, 132, 0.5);
+  backdrop-filter: blur(10px); 
+  color: white;
+  padding: 20px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1100;
+  /* Marco elegante para la sidebar */
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 15px 0;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.sidebar li:hover {
+  color: #8ccbcf;
+}
+
+/* Botón para cerrar el sidebar */
+.close-sidebar {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
